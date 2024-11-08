@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adicionar Aluno</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #db6262;
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Adicionar Aluno</h2>
+
+  <table id="studentsTable">
+    <tr>
+      <th>NOME</th>
+      <th>1° TRIMESTRE</th>
+      <th>2° TRIMESTRE</th>
+      <th>3º TRIMESTRE</th>
+      <th>MÉDIA FINAL</th>
+      <th>FREQUÊNCIA</th>
+      <th>SITUAÇÃO</th>
+    </tr>
+  </table>
+
+  <div class="container">
+    <h3>Adicionar Novo Aluno</h3>
+    <form id="studentForm">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="grade1">1° Trimestre:</label>
+      <input type="number" id="grade1" name="grade1" min="0" max="100" required>
+
+      <label for="grade2">2° Trimestre:</label>
+      <input type="number" id="grade2" name="grade2" min="0" max="100" required>
+
+      <label for="grade3">3° Trimestre:</label>
+      <input type="number" id="grade3" name="grade3" min="0" max="100" required>
+
+      <label for="attendance">Frequência:</label>
+      <input type="number" id="attendance" name="attendance" min="0" max="100" required>
+
+      <button type="submit">Adicionar Aluno</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('studentForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+
+      // Get form values
+      const name = document.getElementById('name').value;
+      const grade1 = parseFloat(document.getElementById('grade1').value);
+      const grade2 = parseFloat(document.getElementById('grade2').value);
+      const grade3 = parseFloat(document.getElementById('grade3').value);
+      const attendance = parseFloat(document.getElementById('attendance').value);
+
+      // Calculate final average
+      const finalAverage = ((grade1 + grade2 + grade3) / 3).toFixed(2);
+      const situation = finalAverage >= 60 ? 'Aprovado' : 'Reprovado';
+
+      // Create a new row and cells
+      const table = document.getElementById('studentsTable');
+      const newRow = table.insertRow(-1);
+      newRow.insertCell(0).textContent = name;
+      newRow.insertCell(1).textContent = grade1;
+      newRow.insertCell(2).textContent = grade2;
+      newRow.insertCell(3).textContent = grade3;
+      newRow.insertCell(4).textContent = finalAverage;
+      newRow.insertCell(5).textContent = attendance;
+      newRow.insertCell(6).textContent = situation;
+
+      // Clear form fields
+      document.getElementById('studentForm').reset();
+    });
+  </script>
+
+</body>
+</html>
